@@ -39,5 +39,3 @@ paths:
             type: string
         400:
           description: "The IATA code you provided is invalid or missing."
-        404:
-          description: "The IATA code you provided was not found."
