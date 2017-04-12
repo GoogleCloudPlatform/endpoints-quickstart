@@ -1,3 +1,4 @@
+#!/bin/bash
 # Copyright 2017 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,14 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-runtime: python
-env: flex
-entrypoint: gunicorn -b :$PORT main:app
+source util.sh
 
-runtime_config:
-  python_version: 3
+main() {
+  check_devshell
+  read -p "Please enter a three digit airport code (leave blank for SFO): " IATA_CODE
+  if [[ -z "$IATA_CODE" ]]; then
+    IATA_CODE="SFO"
+  fi
+  curl "https://${DEVSHELL_PROJECT_ID}.appspot.com/airportName?iataCode=${IATA_CODE}"
+}
 
-endpoints_api_service:
-  # This is a template. Use the deploy_app.sh script to deploy this app.
-  name: SERVICE_NAME
-  config_id: SERVICE_CONFIG_ID
+main "$@"
