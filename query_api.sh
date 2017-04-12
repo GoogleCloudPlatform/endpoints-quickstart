@@ -21,7 +21,11 @@ main() {
   if [[ -z "$IATA_CODE" ]]; then
     IATA_CODE="SFO"
   fi
-  curl "https://${DEVSHELL_PROJECT_ID}.appspot.com/airportName?iataCode=${IATA_CODE}"
+  QUERY="curl \"https://${DEVSHELL_PROJECT_ID}.appspot.com/airportName?iataCode=${IATA_CODE}\""
+  echo "$QUERY"
+  eval $QUERY
+  # Our API doesn't print newlines. So we do it ourselves.
+  printf '\n'
 }
 
 main "$@"

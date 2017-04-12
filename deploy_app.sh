@@ -27,13 +27,18 @@ main() {
     --service="$service_name" \
     --sort-by="~config_id" --limit=1 --format="value(CONFIG_ID)" \
     | tr -d '[:space:]')
+  if [[ -e "$APP" ]]; then
+    echo "${APP} already exists. Exiting."
+    exit 1
+  fi
   cat "$APP_TEMPLATE" \
     | sed -E "s/SERVICE_NAME/${service_name}/g" \
     | sed -E "s/SERVICE_CONFIG_ID/${config_id}/g" \
     > "$APP"
-  echo "created $APP"
-  echo "Deploying ${APP_TEMPLATE}..."
+  echo "Created ${APP_DIRECTORY}/${APP} from ${APP_TEMPLATE}."
+  echo "Deploying ${APP_DIRECTORY}/${APP}..."
   gcloud app deploy
+  echo "Removing ${APP_DIRECTORY}/${APP}."
   rm "$APP"
 }
 
