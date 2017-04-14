@@ -16,9 +16,9 @@
 source util.sh
 
 main() {
-  check_devshell
+  local project_id=$(get_project_id)
   local temp_file=$(mktemp --suffix=".yaml")
-  cat "${API_FILE}" | sed -E "s/YOUR-PROJECT-ID/${DEVSHELL_PROJECT_ID}/g" > "$temp_file"
+  cat "${API_FILE}" | sed -E "s/YOUR-PROJECT-ID/${project_id}/g" > "$temp_file"
   echo "Deploying $API_FILE..."
   gcloud service-management deploy "$temp_file"
   rm "$temp_file"

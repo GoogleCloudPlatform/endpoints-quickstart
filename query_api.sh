@@ -16,12 +16,12 @@
 source util.sh
 
 main() {
-  check_devshell
+  local project_id=$(get_project_id)
   read -p "Please enter a three digit airport code (leave blank for SFO): " IATA_CODE
   if [[ -z "$IATA_CODE" ]]; then
     IATA_CODE="SFO"
   fi
-  QUERY="curl \"https://${DEVSHELL_PROJECT_ID}.appspot.com/airportName?iataCode=${IATA_CODE}\""
+  QUERY="curl \"https://${project_id}.appspot.com/airportName?iataCode=${IATA_CODE}\""
   echo "$QUERY"
   eval $QUERY
   # Our API doesn't print newlines. So we do it ourselves.

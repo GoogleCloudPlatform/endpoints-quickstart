@@ -15,6 +15,23 @@
 
 API_NAME="airports-api"
 
+get_project_id() {
+  # Find the project ID first by DEVSHELL_PROJECT_ID (in Cloud Shell)
+  # and then by querying the gcloud default project.
+  local project=""
+  if [[ -n "$DEVSHELL_PROJECT_ID" ]]; then
+    project="$DEVSHELL_PROJECT_ID"
+  else
+    project=$(gcloud config get-value project 2> /dev/null)
+  fi
+  if [[ -z "$project" ]]; then
+    >&2 echo "DEVSHELL_PROJECT_ID is not set and no default project was found."
+    >&2 echo "Please use the Cloud Shell or set your default project by typing:"
+    >&2 echo "gcloud config set project YOUR-PROJECT-NAME"
+  fi
+  echo "$project"
+}
+
 check_devshell() {
   if [[ -z "$DEVSHELL_PROJECT_ID" ]]; then
     echo "Environment variable DEVSHELL_PROJECT_ID is not set."

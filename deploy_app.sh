@@ -18,10 +18,10 @@ APP="app.yaml"
 APP_DIRECTORY="./app"
 
 main() {
-  check_devshell
   gcloud app create
   cd "$APP_DIRECTORY"
-  local service_name="${API_NAME}.endpoints.${DEVSHELL_PROJECT_ID}.cloud.goog"
+  local project_id="$(get_project_id)"
+  local service_name="${API_NAME}.endpoints.${project_id}.cloud.goog"
   # Get the latest config_id of your service.
   local config_id=$(gcloud service-management configs list \
     --service="$service_name" \
