@@ -7,6 +7,8 @@ Cloud Endpoints [Quickstart Guide](#TBD).
 The included API lets you query the name of an airport from its
 three-letter IATA code.
 
+*This is an example application, not an official Google product.*
+
 ## Before you begin
 
 ### Option 1: Use [Google Cloud Shell](https://cloud.google.com/shell/)
@@ -40,10 +42,6 @@ recommend you use Google Cloud Shell.*
     ./query_api.sh;  : Query the API.
 
 *Note: these scripts will create an App Engine project and deploy an app!*
-
-## Contributing changes
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licensing
 
