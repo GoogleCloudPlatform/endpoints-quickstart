@@ -24,7 +24,7 @@ schemes:
 paths:
   "/airportName":
     get:
-      description: "Return the airport name for a given IATA code."
+      description: "Get the airport name for a given IATA code."
       operationId: "airportName"
       parameters:
         -
@@ -38,4 +38,4 @@ paths:
           schema:
             type: string
         400:
-          description: "The IATA code you provided is invalid or missing."
+          description: "The IATA code is invalid or missing."
