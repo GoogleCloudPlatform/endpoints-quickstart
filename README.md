@@ -11,7 +11,21 @@ three-letter IATA code.
 
 ## Before you begin
 
-### Option 1: Use [Google Cloud Shell](https://cloud.google.com/shell/)
+1. Create a new
+[Cloud Platform project](https://console.cloud.google.com/projectcreate).
+
+1. [Enable billing](https://support.google.com/cloud/answer/6293499#enable-billing)
+   for your project.
+
+## Running the scripts
+
+### Option 1: Use Google Cloud Shell
+
+1. Open the [Google Cloud Platform
+   Console](https://console.cloud.google.com/?_ga=1.38191587.1500870598.1489443487).
+
+1. Click the Cloud Shell icon at the top of the screen.
+![Cloud Shell](https://cloud.google.com/shell/docs/images/shell_icon.png)
 
 ### Option 2: Test Locally in Linux or Mac OS X
 
@@ -21,9 +35,6 @@ recommend you use Google Cloud Shell.*
 1.  Download and install the [Google Cloud
     SDK](https://cloud.google.com/sdk/docs/), which includes the
     [gcloud](https://cloud.google.com/sdk/gcloud/) command-line tool.
-
-1.  Create a [new Google Cloud Platform project from the Cloud
-    Console](https://console.cloud.google.com/project) or use an existing one.
 
 1.  Initialize the Cloud SDK.
 
