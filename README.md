@@ -40,7 +40,7 @@ recommend you use Google Cloud Shell.*
 
         gcloud init
 
-1.  Set your default project (replace YOUR-PROJECT-ID) with the name of your
+1.  Set your default project (replace YOUR-PROJECT-ID with the name of your
     project).
 
         gcloud config set project YOUR-PROJECT-ID
