@@ -14,38 +14,38 @@
 # limitations under the License.
 
 source util.sh
-APP="app.yaml"
-APP_DIRECTORY="./app"
 
 main() {
-  gcloud app create
-  cd "$APP_DIRECTORY"
   local project_id="$(get_project_id)"
-  local service_name="${API_NAME}.endpoints.${project_id}.cloud.goog"
-  # Get the latest config_id of your service.
-  local config_id=$(gcloud service-management configs list \
-    --service="$service_name" \
-    --sort-by="~config_id" --limit=1 --format="value(CONFIG_ID)" \
-    | tr -d '[:space:]')
-  if [[ -e "$APP" ]]; then
-    echo "${APP} already exists. Exiting."
+  if [[ -z "$project_id" ]]; then
     exit 1
   fi
-  cat "$APP_TEMPLATE" \
+  gcloud app create --region="$REGION" || true
+  local service_name="${API_NAME}.endpoints.${project_id}.cloud.goog"
+  local config_id=$(get_latest_config_id "$service_name")
+  local temp_file="${APP}_deploy.yaml"
+  cat "$APP" \
     | sed -E "s/SERVICE_NAME/${service_name}/g" \
     | sed -E "s/SERVICE_CONFIG_ID/${config_id}/g" \
-    > "$APP"
-  echo "Created ${APP_DIRECTORY}/${APP} from ${APP_TEMPLATE}."
-  echo "Deploying ${APP_DIRECTORY}/${APP}..."
-  gcloud app deploy
-  echo "Removing ${APP_DIRECTORY}/${APP}."
-  rm "$APP"
+    > "$temp_file"
+  echo "Deploying ${APP}..."
+  gcloud -q app deploy "$temp_file"
+  rm "$temp_file"
 }
 
-if [[ -z "$1" ]]; then
-  APP_TEMPLATE="app_template.yaml"
+APP="./app/app_template.yaml"
+REGION="us-central"
+if [[ "$#" == 0 ]]; then
+  : # Use defaults.
+elif [[ "$#" == 1 ]]; then
+  APP="$1"
+elif [[ "$#" == 2 ]]; then
+  APP="$1"
+  REGION="$2"
 else
-  APP_TEMPLATE="$1"
+  echo "Wrong number of arguments specified."
+  echo "Usage: deploy_app.sh [app-template] [region]"
+  exit 1
 fi
 
 main "$@"

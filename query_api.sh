@@ -17,9 +17,8 @@ source util.sh
 
 main() {
   local project_id=$(get_project_id)
-  read -p "Please enter a three digit airport code (leave blank for SFO): " IATA_CODE
-  if [[ -z "$IATA_CODE" ]]; then
-    IATA_CODE="SFO"
+  if [[ -z "$project_id" ]]; then
+    exit 1
   fi
   QUERY="curl \"https://${project_id}.appspot.com/airportName?iataCode=${IATA_CODE}\""
   echo "$QUERY"
@@ -27,5 +26,16 @@ main() {
   # Our API doesn't print newlines. So we do it ourselves.
   printf '\n'
 }
+
+IATA_CODE="SFO"
+if [[ "$#" == 0 ]]; then
+  : # Use defaults.
+elif [[ "$#" == 1 ]]; then
+  IATA_CODE="$1"
+else
+  echo "Wrong number of arguments specified."
+  echo "Usage: query_api.sh [iata-code]"
+  exit 1
+fi
 
 main "$@"

@@ -17,6 +17,9 @@ source util.sh
 
 main() {
   local project_id=$(get_project_id)
+  if [[ -z "$project_id" ]]; then
+    exit 1
+  fi
   local temp_file=$(mktemp --suffix=".yaml")
   cat "${API_FILE}" | sed -E "s/YOUR-PROJECT-ID/${project_id}/g" > "$temp_file"
   echo "Deploying $API_FILE..."
@@ -24,9 +27,15 @@ main() {
   rm "$temp_file"
 }
 
-if [[ -z "$1" ]]; then
-  API_FILE="openapi.yaml"
-else
+API_FILE="openapi.yaml"
+if [[ "$#" == 0 ]]; then
+  : # Use defaults.
+elif [[ "$#" == 1 ]]; then
   API_FILE="$1"
+else
+  echo "Wrong number of arguments specified."
+  echo "Usage: deploy_api.sh [api-file]"
+  exit 1
 fi
+
 main "$@"

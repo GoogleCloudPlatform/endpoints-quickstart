@@ -13,19 +13,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+set -euo pipefail
+
 API_NAME="airports-api"
+
+get_latest_config_id() {
+  service_name="$1"
+  echo "$(
+  gcloud service-management configs list \
+    --service="$service_name" \
+    --sort-by="~config_id" --limit=1 --format="value(CONFIG_ID)" \
+    | tr -d '[:space:]')"
+}
 
 get_project_id() {
   # Find the project ID first by DEVSHELL_PROJECT_ID (in Cloud Shell)
   # and then by querying the gcloud default project.
-  local project=""
-  if [[ -n "$DEVSHELL_PROJECT_ID" ]]; then
-    project="$DEVSHELL_PROJECT_ID"
-  else
+  local project="${DEVSHELL_PROJECT_ID:-}"
+  if [[ -z "$project" ]]; then
     project=$(gcloud config get-value project 2> /dev/null)
   fi
   if [[ -z "$project" ]]; then
-    >&2 echo "DEVSHELL_PROJECT_ID is not set and no default project was found."
+    >&2 echo "No default project was found, and DEVSHELL_PROJECT_ID is not set."
     >&2 echo "Please use the Cloud Shell or set your default project by typing:"
     >&2 echo "gcloud config set project YOUR-PROJECT-NAME"
   fi
