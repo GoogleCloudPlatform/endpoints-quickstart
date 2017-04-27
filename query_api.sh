@@ -16,18 +16,25 @@
 source util.sh
 
 main() {
+  # Get our working project, or exit if it's not set.
   local project_id=$(get_project_id)
   if [[ -z "$project_id" ]]; then
     exit 1
   fi
+  # Because our included app uses query string parameters, we can include
+  # them directly in the URL.
   QUERY="curl \"https://${project_id}.appspot.com/airportName?iataCode=${IATA_CODE}\""
+  # First, print the command so the user can see what's being executed.
   echo "$QUERY"
+  # Then actually execute it.
   eval $QUERY
   # Our API doesn't print newlines. So we do it ourselves.
   printf '\n'
 }
 
+# Defaults.
 IATA_CODE="SFO"
+
 if [[ "$#" == 0 ]]; then
   : # Use defaults.
 elif [[ "$#" == 1 ]]; then

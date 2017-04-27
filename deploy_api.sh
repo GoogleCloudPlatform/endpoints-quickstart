@@ -16,18 +16,24 @@
 source util.sh
 
 main() {
+  # Get our working project, or exit if it's not set.
   local project_id=$(get_project_id)
   if [[ -z "$project_id" ]]; then
     exit 1
   fi
+  # Because the included API is a template, we have to do some string
+  # substitution before we can deploy it. Sed does this nicely.
   local temp_file=$(mktemp --suffix=".yaml")
   cat "${API_FILE}" | sed -E "s/YOUR-PROJECT-ID/${project_id}/g" > "$temp_file"
   echo "Deploying $API_FILE..."
   gcloud service-management deploy "$temp_file"
+  # Clean up after ourselves.
   rm "$temp_file"
 }
 
+# Defaults.
 API_FILE="openapi.yaml"
+
 if [[ "$#" == 0 ]]; then
   : # Use defaults.
 elif [[ "$#" == 1 ]]; then

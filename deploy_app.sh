@@ -16,11 +16,16 @@
 source util.sh
 
 main() {
+  # Get our working project, or exit if it's not set.
   local project_id="$(get_project_id)"
   if [[ -z "$project_id" ]]; then
     exit 1
   fi
+  # Try to create an App Engine project in our selected region.
+  # If it already exists, return a success ("|| true").
   gcloud app create --region="$REGION" || true
+  # Prepare the necessary variables for substitution in our app configuration
+  # template, and create a temporary file to hold the templatized version.
   local service_name="${API_NAME}.endpoints.${project_id}.cloud.goog"
   local config_id=$(get_latest_config_id "$service_name")
   local temp_file="${APP}_deploy.yaml"
@@ -30,11 +35,14 @@ main() {
     > "$temp_file"
   echo "Deploying ${APP}..."
   gcloud -q app deploy "$temp_file"
+  # Clean up after ourselves.
   rm "$temp_file"
 }
 
+# Defaults.
 APP="./app/app_template.yaml"
 REGION="us-central"
+
 if [[ "$#" == 0 ]]; then
   : # Use defaults.
 elif [[ "$#" == 1 ]]; then
