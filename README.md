@@ -52,6 +52,7 @@ recommend you use Google Cloud Shell.*
     ./deploy_app.sh; : Deploy the backend app.
     ./query_api.sh; : Query the API.
     ./generate_traffic.sh; : Send traffic to the API.
+    ./generate_traffic.sh ASDF; : Send error traffic to the API.
     # And after you're done...
     ./delete_project.sh; : Delete your project.
 
