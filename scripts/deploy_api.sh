@@ -34,7 +34,7 @@ cleanup() {
 }
 
 # Defaults.
-API_FILE="openapi.yaml"
+API_FILE="../openapi.yaml"
 
 if [[ "$#" == 0 ]]; then
   : # Use defaults.
