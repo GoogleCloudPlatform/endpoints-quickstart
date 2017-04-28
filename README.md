@@ -47,7 +47,7 @@ recommend you use Google Cloud Shell.*
 
 ## Basic Usage
 
-
+    cd scripts
     ./deploy_api.sh; : Deploy the API.
     ./deploy_app.sh; : Deploy the backend app.
     ./query_api.sh; : Query the API.
