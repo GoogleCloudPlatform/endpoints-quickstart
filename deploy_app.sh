@@ -29,8 +29,8 @@ main() {
   local service_name="${API_NAME}.endpoints.${project_id}.cloud.goog"
   local config_id=$(get_latest_config_id "$service_name")
   local temp_file="${APP}_deploy.yaml"
-  cat "$APP" \
-    | sed -E "s/SERVICE_NAME/${service_name}/g" \
+  < "$APP" \
+    sed -E "s/SERVICE_NAME/${service_name}/g" \
     | sed -E "s/SERVICE_CONFIG_ID/${config_id}/g" \
     > "$temp_file"
   echo "Deploying ${APP}..."

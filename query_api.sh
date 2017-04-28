@@ -27,6 +27,7 @@ main() {
   # First, print the command so the user can see what's being executed.
   echo "$QUERY"
   # Then actually execute it.
+  # shellcheck disable=SC2086
   eval $QUERY
   # Our API doesn't print newlines. So we do it ourselves.
   printf '\n'

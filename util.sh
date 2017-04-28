@@ -18,17 +18,16 @@ set -euo pipefail
 
 # This is for the included Airports sample. But you could change this to work
 # with other APIs.
-API_NAME="airports-api"
+export API_NAME="airports-api"
 
 get_latest_config_id() {
   # Given a service name, this returns the most recent deployment of that
   # API.
   service_name="$1"
-  echo "$(
   gcloud service-management configs list \
     --service="$service_name" \
     --sort-by="~config_id" --limit=1 --format="value(CONFIG_ID)" \
-    | tr -d '[:space:]')"
+    | tr -d '[:space:]'
 }
 
 get_project_id() {
