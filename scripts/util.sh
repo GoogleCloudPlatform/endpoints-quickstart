@@ -44,11 +44,3 @@ get_project_id() {
   fi
   echo "$project"
 }
-
-check_devshell() {
-  if [[ -z "$DEVSHELL_PROJECT_ID" ]]; then
-    echo "Environment variable DEVSHELL_PROJECT_ID is not set."
-    echo "Please set it to your project ID and try again."
-    exit 1
-  fi
-}
