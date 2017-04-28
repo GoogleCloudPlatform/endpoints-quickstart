@@ -23,12 +23,14 @@ main() {
   fi
   # Because the included API is a template, we have to do some string
   # substitution before we can deploy it. Sed does this nicely.
-  local temp_file=$(mktemp --suffix=".yaml")
-  < "$API_FILE" sed -E "s/YOUR-PROJECT-ID/${project_id}/g" > "$temp_file"
+  export TEMP_FILE=$(mktemp --suffix=".yaml")
+  < "$API_FILE" sed -E "s/YOUR-PROJECT-ID/${project_id}/g" > "$TEMP_FILE"
   echo "Deploying $API_FILE..."
-  gcloud service-management deploy "$temp_file"
-  # Clean up after ourselves.
-  rm "$temp_file"
+  gcloud service-management deploy "$TEMP_FILE"
+}
+
+cleanup() {
+  rm "$TEMP_FILE"
 }
 
 # Defaults.
@@ -43,5 +45,8 @@ else
   echo "Usage: deploy_api.sh [api-file]"
   exit 1
 fi
+
+# Cleanup our temporary files even if our deployment fails.
+trap cleanup EXIT
 
 main "$@"

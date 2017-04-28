@@ -28,15 +28,17 @@ main() {
   # template, and create a temporary file to hold the templatized version.
   local service_name="${API_NAME}.endpoints.${project_id}.cloud.goog"
   local config_id=$(get_latest_config_id "$service_name")
-  local temp_file="${APP}_deploy.yaml"
+  export TEMP_FILE="${APP}_deploy.yaml"
   < "$APP" \
     sed -E "s/SERVICE_NAME/${service_name}/g" \
     | sed -E "s/SERVICE_CONFIG_ID/${config_id}/g" \
-    > "$temp_file"
+    > "$TEMP_FILE"
   echo "Deploying ${APP}..."
-  gcloud -q app deploy "$temp_file"
-  # Clean up after ourselves.
-  rm "$temp_file"
+  gcloud -q app deploy "$TEMP_FILE"
+}
+
+cleanup() {
+  rm "$TEMP_FILE"
 }
 
 # Defaults.
@@ -55,5 +57,8 @@ else
   echo "Usage: deploy_app.sh [app-template] [region]"
   exit 1
 fi
+
+# Cleanup our temporary files even if our deployment fails.
+trap cleanup EXIT
 
 main "$@"
