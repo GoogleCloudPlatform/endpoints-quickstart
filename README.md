@@ -50,7 +50,10 @@ recommend you use Google Cloud Shell.*
 
     ./deploy_api.sh; : Deploy the API.
     ./deploy_app.sh; : Deploy the backend app.
-    ./query_api.sh;  : Query the API.
+    ./query_api.sh; : Query the API.
+    ./generate_traffic.sh; : Send traffic to the API.
+    # And after you're done...
+    ./delete_project.sh; : Delete your project.
 
 *Note: these scripts will create an App Engine project and deploy an app!*
 
