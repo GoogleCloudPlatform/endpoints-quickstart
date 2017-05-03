@@ -45,7 +45,7 @@ recommend you use Google Cloud Shell.*
 
         gcloud config set project YOUR-PROJECT-ID
 
-## Basic Usage
+## Usage
 
     cd scripts
     ./deploy_api.sh; : Deploy the API.
