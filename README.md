@@ -1,8 +1,7 @@
 ## Cloud Endpoints Quickstart Scripts
 
-These scripts help get you up and running with [Google Cloud Endpoints](https://cloud.google.com/endpoints/)
-quickly and easily. They are designed to be used in conjunction with the
-Cloud Endpoints [Quickstart Guide](#TBD).
+These scripts help you get started with [Google Cloud Endpoints](https://cloud.google.com/endpoints/)
+quickly and easily.
 
 The included API lets you query the name of an airport from its
 three-letter IATA code.
