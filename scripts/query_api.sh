@@ -24,8 +24,10 @@ main() {
   # Because our included app uses query string parameters, we can include
   # them directly in the URL.
   QUERY="curl \"https://${project_id}.appspot.com/airportName?iataCode=${IATA_CODE}\""
-  # First, print the command so the user can see what's being executed.
-  echo "$QUERY"
+  # First, (maybe) print the command so the user can see what's being executed.
+  if [[ "$QUIET" == "false" ]]; then
+    echo "$QUERY"
+  fi
   # Then actually execute it.
   # shellcheck disable=SC2086
   eval $QUERY
@@ -35,14 +37,19 @@ main() {
 
 # Defaults.
 IATA_CODE="SFO"
+QUIET="false"
 
 if [[ "$#" == 0 ]]; then
   : # Use defaults.
 elif [[ "$#" == 1 ]]; then
   IATA_CODE="$1"
+elif [[ "$#" == 2 ]]; then
+  # "Quiet mode" won't print the curl command.
+  IATA_CODE="$1"
+  QUIET="true"
 else
   echo "Wrong number of arguments specified."
-  echo "Usage: query_api.sh [iata-code]"
+  echo "Usage: query_api.sh [iata-code] [quiet-mode]"
   exit 1
 fi
 
