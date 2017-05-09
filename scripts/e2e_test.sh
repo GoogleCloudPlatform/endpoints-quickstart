@@ -12,6 +12,8 @@ main() {
   # There's no good reason this should be set. But unset it anyways.
   unset DEVSHELL_PROJECT_ID
   gcloud config set project "$PROJECT_ID"
+  # Change directory to ./scripts
+  cd $(dirname "$0")
   ./deploy_api.sh
   ./deploy_app.sh
   response=$(./query_api.sh BOS quiet)
