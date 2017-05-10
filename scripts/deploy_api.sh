@@ -26,6 +26,7 @@ main() {
   export TEMP_FILE=$(mktemp --suffix=".yaml")
   < "$API_FILE" sed -E "s/YOUR-PROJECT-ID/${project_id}/g" > "$TEMP_FILE"
   echo "Deploying $API_FILE..."
+  echo "gcloud service-management deploy $API_FILE"
   gcloud service-management deploy "$TEMP_FILE"
 }
 

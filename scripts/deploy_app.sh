@@ -23,6 +23,7 @@ main() {
   fi
   # Try to create an App Engine project in our selected region.
   # If it already exists, return a success ("|| true").
+  echo "gcloud app create --region=$REGION"
   gcloud app create --region="$REGION" || true
   # Prepare the necessary variables for substitution in our app configuration
   # template, and create a temporary file to hold the templatized version.
@@ -34,6 +35,7 @@ main() {
     | sed -E "s/SERVICE_CONFIG_ID/${config_id}/g" \
     > "$TEMP_FILE"
   echo "Deploying ${APP}..."
+  echo "gcloud -q app deploy $APP"
   gcloud -q app deploy "$TEMP_FILE"
 }
 
