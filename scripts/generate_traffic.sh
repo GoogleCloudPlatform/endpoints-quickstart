@@ -22,16 +22,19 @@ main() {
     exit 1
   fi
   local url="https://${project_id}.appspot.com/airportName?iataCode=${IATA_CODE}"
+  echo "This command will exit automatically in $TIMEOUT_SECONDS seconds."
   echo "Generating traffic to ${url}..."
   echo "Press Ctrl-C to stop."
-  # Run curl as fast as we can (without parallelization).
-  while true; do
-    curl "$url" &>/dev/null
+  local endtime=$(($(date +%s) + $TIMEOUT_SECONDS))
+  # Send queries repeatedly until TIMEOUT_SECONDS seconds have elapsed.
+  while [[ $(date +%s) -lt $endtime ]]; do
+    curl "$url" &> /dev/null
   done
 }
 
 # Defaults.
 IATA_CODE="SFO"
+TIMEOUT_SECONDS=$((5 * 60)) # Timeout after 5 minutes.
 
 if [[ "$#" == 0 ]]; then
   : # Use defaults.
