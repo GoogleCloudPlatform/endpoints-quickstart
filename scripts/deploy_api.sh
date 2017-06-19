@@ -21,9 +21,11 @@ main() {
   if [[ -z "$project_id" ]]; then
     exit 1
   fi
+  local temp_file=$(mktemp)
+  export TEMP_FILE="${temp_file}.yaml"
+  mv "$temp_file" "$TEMP_FILE"
   # Because the included API is a template, we have to do some string
   # substitution before we can deploy it. Sed does this nicely.
-  export TEMP_FILE=$(mktemp --suffix=".yaml")
   < "$API_FILE" sed -E "s/YOUR-PROJECT-ID/${project_id}/g" > "$TEMP_FILE"
   echo "Deploying $API_FILE..."
   echo "gcloud service-management deploy $API_FILE"
