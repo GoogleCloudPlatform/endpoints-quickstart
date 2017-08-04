@@ -16,10 +16,6 @@
 # Make Bash a little less error-prone.
 set -euo pipefail
 
-# This is for the included Airports sample. But you could change this to work
-# with other APIs.
-export API_NAME="airports-api"
-
 get_latest_config_id() {
   # Given a service name, this returns the most recent deployment of that
   # API.
