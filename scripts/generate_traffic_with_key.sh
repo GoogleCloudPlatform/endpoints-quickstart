@@ -70,7 +70,7 @@ elif [[ "$#" == 2 ]]; then
   IATA_CODE="$2"
 else
   echo "Wrong number of arguments specified."
-  echo "Usage: generate_traffic.sh api-key [iata-code]"
+  echo "Usage: generate_traffic_with_key.sh api-key [iata-code]"
   exit 1
 fi
 
