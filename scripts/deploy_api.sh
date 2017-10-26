@@ -30,8 +30,8 @@ main() {
   # substitution before we can deploy it. Sed does this nicely.
   < "$API_FILE" sed -E "s/YOUR-PROJECT-ID/${project_id}/g" > "$TEMP_FILE"
   echo "Deploying $API_FILE..."
-  echo "gcloud service-management deploy $API_FILE"
-  gcloud service-management deploy "$TEMP_FILE"
+  echo "gcloud endpoints services deploy $API_FILE"
+  gcloud endpoints services deploy "$TEMP_FILE"
 }
 
 cleanup() {
