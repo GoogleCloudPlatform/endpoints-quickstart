@@ -20,7 +20,7 @@ get_latest_config_id() {
   # Given a service name, this returns the most recent deployment of that
   # API.
   service_name="$1"
-  gcloud service-management configs list \
+  gcloud endpoints configs list \
     --service="$service_name" \
     --sort-by="~config_id" --limit=1 --format="value(CONFIG_ID)" \
     | tr -d '[:space:]'
