@@ -21,7 +21,18 @@ main() {
   if [[ -z "$project_id" ]]; then
     exit 1
   fi
-  gcloud -q projects delete "$project_id"
+  read -r -p \
+    "This will COMPLETELY DELETE ${project_id}... Are you sure? (y/n) " response
+  case "$response" in
+    [yY]*)
+      echo "Deleting ${project_id}..."
+      gcloud -q projects delete "$project_id"
+      echo "Deleted ${project_id}."
+      ;;
+      *)
+      echo "Not continuing."
+      ;;
+  esac
 }
 
 main "$@"
