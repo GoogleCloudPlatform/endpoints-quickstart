@@ -59,7 +59,6 @@ x-google-management:
   quota:
     limits:
       - name: limit-on-airport-requests
-        displayName: "Airport request limit"
         values:
           STANDARD: 5
         unit: "1/min/{project}"
