@@ -34,11 +34,10 @@ main() {
   export TEMP_FILE="${APP}_deploy.yaml"
   < "$APP" \
     sed -E "s/SERVICE_NAME/${service_name}/g" \
-    | sed -E "s/SERVICE_CONFIG_ID/${config_id}/g" \
     > "$TEMP_FILE"
   echo "Deploying ${APP}..."
   echo "gcloud -q app deploy $APP"
-  gcloud -q app deploy "$TEMP_FILE"
+  gcloud beta -q app deploy "$TEMP_FILE"
 }
 
 cleanup() {
