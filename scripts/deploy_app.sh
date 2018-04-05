@@ -30,7 +30,7 @@ main() {
   # Prepare the necessary variables for substitution in our app configuration
   # template, and create a temporary file to hold the templatized version.
   local service_name="${project_id}.appspot.com"
-  export TEMP_FILE="${APP}_deploy.yaml"
+  export TEMP_FILE="../app/app.yaml"
   < "$APP" \
     sed -E "s/SERVICE_NAME/${service_name}/g" \
     > "$TEMP_FILE"
