@@ -36,7 +36,7 @@ main() {
     > "$TEMP_FILE"
   echo "Deploying ${APP}..."
   echo "gcloud -q app deploy $APP"
-  gcloud beta -q app deploy "$TEMP_FILE"
+  gcloud -q app deploy "$TEMP_FILE"
 }
 
 cleanup() {
