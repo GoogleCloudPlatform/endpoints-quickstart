@@ -35,7 +35,7 @@ main() {
     sed -E "s/SERVICE_NAME/${service_name}/g" \
     > "$TEMP_FILE"
   echo "Deploying ${APP}..."
-  echo "gcloud -q app deploy $APP"
+  echo "gcloud -q app deploy $TEMP_FILE"
   gcloud -q app deploy "$TEMP_FILE"
 }
 
